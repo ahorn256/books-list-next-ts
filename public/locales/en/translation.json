@@ -1,0 +1,58 @@
+{
+  "not-found": "Not found",
+  "back-to-homepage": "Back to <0>Home</0>",
+  "book": {
+    "title": "Title",
+    "isbn": "ISBN",
+    "author": "Author",
+    "rating": "Rating",
+    "release": "Release",
+    "releaseValue": "release: {release, date}",
+    "price": "Price",
+    "priceValue": "{price, number, currency}",
+    "pages": "Pages",
+    "pagesValue": "Pages: {pages}"
+  },
+  "form": {
+    "error" : {
+      "title-required": "\"Title\" is required",
+      "error": "Error"
+    },
+    "title" : {
+      "add-new-book": "Add a new book",
+      "edit-book": "Edit book",
+      "confirm-deletion": "Confirm deletion",
+      "login": "Login"
+    },
+    "text": {
+      "confirm-deletion": "Do you want remove \"{id}\"?"
+    },
+    "action" : {
+      "cancel": "Cancel",
+      "save": "Save",
+      "ok": "OK",
+      "login": "Login"
+    },
+    "field-label": {
+      "username": "Username",
+      "password": "Password",
+      "title": "Title",
+      "isbn": "ISBN",
+      "author": "Author",
+      "filter-books": "Filter books"
+    }
+  },
+  "fetch": {
+    "error": {
+      "env-var-undefined": "{var} undefined",
+      "deletion-failed": "Couldn't delete the book with the id \"{id}\"",
+      "fetch-books-failed": "Couldn't fetch books",
+      "add-book-failed": "Couldn't add the book \"{title}\"",
+      "update-book-failed": "Couldn't update the book \"{title}\""
+    }
+  },
+  "error": {
+    "unknown": "Unknown error",
+    "login-required": "Please login to see the content"
+  }
+}

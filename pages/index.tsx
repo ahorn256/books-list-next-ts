@@ -1,69 +1,28 @@
-import { Book } from "@/Book";
-import db from "@/db";
-import { GetServerSideProps, NextPage } from "next";
-import { useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "@/app/store";
+import BooksApp from "@/features/books/BooksApp";
+import Nav from "@/features/navMenu/Nav";
+import { GetStaticProps } from "next";
 
-type Props = {
-  initialBooks: Book[];
-}
-
-const tableHead = {
-  title: 'Titel',
-  author: 'Autor',
-  isbn: 'ISBN',
-};
-
-const List:NextPage<Props> = ({ initialBooks }) => {
-  const [ books, setBooks ] = useState(initialBooks);
-
-  async function handleDelete(id: string) {
-    const response = await fetch(`http://localhost:3000/api/books/${id}`, {
-      method: 'DELETE',
-    });
-
-    if(response.ok) {
-      const response = await fetch('http://localhost:3000/api/books');
-
-      if(response.ok) {
-        const data = await response.json();
-        setBooks(data as Book[]);
-      }
-    }
-  }
-
+function Home() {
   return (
-    <>
-      <table>
-        <thead>
-          <tr>
-            { Object.entries(tableHead).map(([key, val]) => <th key={key}>{val}</th>) }
-          </tr>
-        </thead>
-        <tbody>
-          { books.map(book =>
-            <tr key={book.id}>
-              <td>{book.title}</td>
-              <td>{book.author}</td>
-              <td>{book.isbn}</td>
-              <td><button onClick={() => handleDelete(book.id)}>delete</button></td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </>
+    <Provider store={store}>
+      <div className="App">
+        <Nav />
+        <div className="App-content">
+          <BooksApp />
+        </div>
+      </div>
+    </Provider>
   );
 }
 
-export const getServerSideProps:GetServerSideProps = async () => {
-  await db.read();
-  const initialBooks:Book[] = db.data.books;
-
-  return  {
+export const getStaticProps:GetStaticProps = async (context) => {
+  return {
     props: {
-      initialBooks,
+      messages: (await import(`../public/locales/${context.locale}/translation.json`)).default,
     }
   }
 }
 
-export default List;
-
+export default Home;
