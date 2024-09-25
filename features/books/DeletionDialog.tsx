@@ -1,16 +1,18 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import { Close } from '@mui/icons-material';
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { resetBookRemoveState, selectBookRemoveError, selectBookRemoveState } from "./booksSlice";
 import { removeBookAction } from "./books.actions";
 import { useTranslations } from "next-intl";
 
-function DeletionDialog() {
+type Props = {
+  id?: string,
+  onClose: () => void;
+}
+
+const DeletionDialog:React.FC<Props> = ({ id, onClose: afterClose }) => {
   const [ open, setOpen ] = useState(false);
-  // TODO
-  // const { id } = useParams<{id:string}>();
-  const [ id ] = useState<string|null>(null);
   const dispatch = useAppDispatch();
   const bookRemoveState = useAppSelector(selectBookRemoveState);
   const bookRemoveError = useAppSelector(selectBookRemoveError);
@@ -19,8 +21,7 @@ function DeletionDialog() {
   const onClose = useCallback(() => {
     dispatch(resetBookRemoveState());
     setOpen(false);
-    //navigate('/');
-    console.log('TODO: navigate to "/", keep query');
+    afterClose();
   }, [dispatch]);
 
   useEffect(() => {
