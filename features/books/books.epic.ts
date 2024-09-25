@@ -85,7 +85,8 @@ const saveBook:Epic = (action$, state$) =>
         });
         
         if(response.ok) {
-          return response.json();
+          const { book } = await response.json();
+          return book;
         } else {
           if(doUpdate) {
             throw new FetchError('fetch.error.update-book-failed', { title: book.title });

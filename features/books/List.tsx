@@ -10,6 +10,7 @@ import { loadBooksAction } from "./books.actions";
 import BookInfo from "./BookInfo";
 import { useTranslations } from "next-intl";
 import DeletionDialog from "./DeletionDialog";
+import FormDialog from "./FormDialog";
 
 type Props = {
   filterByTitle?: string,
@@ -25,6 +26,7 @@ const List:React.FC<Props> = ({ filterByTitle }) => {
   const dispatch = useAppDispatch();
   const t = useTranslations();
   const [ deleteId, setDeleteId ] = useState<string|null>(null);
+  const [ editId, setEditId ] = useState<string|null>(null);
   const filteredBooks = useMemo<Book[]>(() =>
     sortBooks(
       filterByTitle ?
@@ -48,8 +50,7 @@ const List:React.FC<Props> = ({ filterByTitle }) => {
   }
 
   function onEdit(book:Book) {
-    // navigate(`/edit/${book.id}`);
-    console.log(`TODO: navigate to "/edit/${book.id}", keep query`);
+    setEditId(book.id);
   }
 
   return (
@@ -97,6 +98,7 @@ const List:React.FC<Props> = ({ filterByTitle }) => {
         </Table>
       </Paper>
       { deleteId && <DeletionDialog id={deleteId} onClose={() => setDeleteId(null)}/> }
+      { editId && <FormDialog id={editId} onClose={() => setEditId(null)}/> }
     </>
   );
 }

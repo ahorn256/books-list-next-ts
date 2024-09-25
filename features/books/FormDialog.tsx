@@ -1,6 +1,6 @@
 import { Close } from '@mui/icons-material';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, IconButton, TextField } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { InputBook } from './Book';
@@ -10,7 +10,12 @@ import { resetBookSaveState, selectBook, selectBookSaveError, selectBookSaveStat
 import { saveBookAction } from './books.actions';
 import { useTranslations } from 'next-intl';
 
-function FormDialog() {
+type Props = {
+  id?: string,
+  onClose: () => void, 
+}
+
+const FormDialog:React.FC<Props> = ({ id, onClose: afterClose }) => {
   const {
     register,
     handleSubmit,
@@ -19,9 +24,6 @@ function FormDialog() {
   } = useForm<InputBook>({
     resolver: yupResolver(formValidationSchema),
   });
-  // const { id } = useParams<{id:string}>();
-  const [ id ] = useState<string|null>(null);
-
   const [ open, setOpen ] = useState(false);
   const getBook = useAppSelector(selectBook);
   const dispatch = useAppDispatch();
@@ -32,8 +34,7 @@ function FormDialog() {
   const onClose = useCallback(() => {
     dispatch(resetBookSaveState());
     setOpen(false);
-    // navigate('/');
-    console.log('TODO: navigate to "/", keep query');
+    afterClose();
   }, [dispatch]);
 
   useEffect(() => {
