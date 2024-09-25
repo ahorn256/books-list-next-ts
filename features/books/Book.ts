@@ -3,13 +3,13 @@ export type Book = {
   title: string,
   author?: string,
   isbn?: string,
-  rating?: number,
+  rating: number,
   release?: number,
   price?: number,
   pages?: number,
 };
 
-export type InputBook = Omit<Book, 'id'> & { id?: string };
+export type InputBook = Omit<Book, 'id'|'rating'> & { id?: string, rating?: number };
 
 export type BookSortIn = keyof Book;
 export type BookSortDirection = 'asc' | 'desc';

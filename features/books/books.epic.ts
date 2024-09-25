@@ -43,7 +43,7 @@ const removeBook:Epic = (action$, state$) =>
           throw new FetchError("fetch.error.env-var-undefined", { var: "NEXT_PUBLIC_BACKEND_BOOKS_URL" });
         }
     
-        const response = await fetch(`${url}/${id}`, {
+        const response = await fetch(`${url}/delete/${id}`, {
           method: 'DELETE',
           headers: { 'authorization': `Bearer ${selectToken(state$.value)}` }
         });
@@ -72,7 +72,7 @@ const saveBook:Epic = (action$, state$) =>
         }
 
         const doUpdate = 'id' in book;
-        const requestUrl =  doUpdate ? `${url}/${book.id}` : url;
+        const requestUrl =  doUpdate ? `${url}/edit/${book.id}` : `${url}/new`;
         const requestMethod = doUpdate ? 'PUT' : 'POST';
 
         const response = await fetch(requestUrl, {

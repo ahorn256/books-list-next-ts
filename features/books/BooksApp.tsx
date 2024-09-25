@@ -3,18 +3,19 @@ import { Fab, Grid2 as Grid, TextField } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import List from './List';
 import { useTranslations } from 'next-intl';
+import FormDialog from './FormDialog';
 
 function BooksApp() {
   const [ filter, setFilter ] = useState('');
   const t = useTranslations();
+  const [ openDialog , setOpenDialog ] = useState(false);
 
   function onFilter(filterText: string) {
     setFilter(filterText);
   }
 
   function onAdd() {
-    // navigate('/new');
-    console.log(`TODO: navigate to "/new", keep query`);
+    setOpenDialog(true);
   }
 
   return (
@@ -42,6 +43,7 @@ function BooksApp() {
           <Add />
         </Fab>
       </Grid>
+      { openDialog && <FormDialog onClose={() => setOpenDialog(false)} /> }
       {/* TODO: <Outlet /> */}
     </>
   );
